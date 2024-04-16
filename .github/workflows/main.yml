@@ -18,7 +18,7 @@ jobs:
     - name: Pull application.yml from develop
       run: |
         git fetch origin develop
-        git checkout origin/develop -- path/to/application.yml  # 경로를 올바르게 수정
+        git checkout origin/develop -- testActions/src/main/resources/application.yml  # 경로를 올바르게 수정
 
     - name: Set TEST_KEY in application.yml
       env:
