@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: testActions
+
+test :
+  key: test-key-placeholder
