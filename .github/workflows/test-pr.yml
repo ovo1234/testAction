@@ -25,6 +25,6 @@ jobs:
         TEST_KEY: ${{ secrets.TEST_KEY }}
       run: |
         sed -i "s#test-key-placeholder#$TEST_KEY#g" path/to/application.yml  # 경로를 올바르게 수정
-        git add path/to/application.yml
+        git add testActions/src/main/resources/application.yml
         git commit -m "Update application.yml with TEST_KEY"
         git push origin develop  # 또는 원하는 브랜치로 변경 가능
