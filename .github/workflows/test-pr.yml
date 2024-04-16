@@ -1,4 +1,4 @@
-name: Pull application.yml
+name: Pull and update application.yml
 
 on:
   push:
@@ -6,22 +6,25 @@ on:
       - develop  # 원하는 브랜치로 변경 가능
 
 jobs:
-  pull-application-yml:
+  pull-and-update-application-yml:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+      
+    - name: Pull application.yml from develop
+      run: |
+        git fetch origin develop
+        git checkout origin/develop -- path/to/application.yml  # 경로를 올바르게 수정
 
-      - name: Pull application.yml from develop
-        run: |
-          git fetch origin develop
-          git checkout origin/develop -- application.yml
-      - name: Set TEST_KEY in application.yml
-        env:
-          TEST_KEY: ${{ secrets.TEST_KEY }}
-        run: |
-          sed -i "s#test-key-placeholder#$TEST_KEY#g" application.yml
-          git add application.yml
-          git commit -m "Update application.yml with TEST_KEY"
-          git push origin develop  # 또는 원하는 브랜치로 변경 가능
+    - name: Set TEST_KEY in application.yml
+      env:
+        TEST_KEY: ${{ secrets.TEST_KEY }}
+      run: |
+        sed -i "s#test-key-placeholder#$TEST_KEY#g" path/to/application.yml  # 경로를 올바르게 수정
+        git add path/to/application.yml
+        git commit -m "Update application.yml with TEST_KEY"
+        git push origin develop  # 또는 원하는 브랜치로 변경 가능
