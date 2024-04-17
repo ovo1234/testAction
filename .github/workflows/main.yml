@@ -1,7 +1,9 @@
 name: Download application-secret.yml
 
 on:
-  workflow_dispatch:  # 수동 트리거
+  push:
+    branches:
+      - develop
 
 jobs:
   download-secret:
