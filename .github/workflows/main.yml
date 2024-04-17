@@ -15,8 +15,9 @@ jobs:
       with:
         fetch-depth: 0
 
-    - name: create secrets file
+    - name: Download application-secret.yml
       env:
-        OCCUPY_SECRET: ${{ secrets.TEST_YML }}
-      run: 
-        echo $OCCUPY_SECRET | base64 --decode >> testActions/src/main/resources/application-secret.yml
+        SECRET_PATH: Actions/src/main/resources/application-secret.yml  # 로컬에 저장할 경로
+        OCCUPY_SECRET: ${{ secrets.TEST_YML }}  # GitHub Secrets에 저장된 값
+      run: |
+        echo $OCCUPY_SECRET | base64 --decode > $SECRET_PATH
