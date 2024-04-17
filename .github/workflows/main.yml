@@ -17,9 +17,10 @@ jobs:
 
     - name: Download application-secret.yml
       env:
+        SECRET_PATH: testActions/src/main/resources/application-secret.yml  # 로컬에 저장할 경로
         OCCUPY_SECRET: ${{ secrets.TEST_YML }}  # GitHub Secrets에 저장된 값
-      run: echo $OCCUPY_SECRET | base64 --decode
-      id: get_secret
+      run: |
+        echo $OCCUPY_SECRET | base64 --decode > $SECRET_PATH
 
     - name: Save to GitHub Actions artifact
       uses: actions/upload-artifact@v2
