@@ -17,13 +17,16 @@ jobs:
       env:
         SECRET_PATH: ./application-secret.yml  # 로컬에 저장할 경로
         OCCUPY_SECRET: ${{ secrets.TEST_YML }}  # GitHub Secrets에 저장된 값
+        GITHUB_TOKEN: ${{ secrets.TOKEN_KEY }}  # GitHub의 토큰
       run: |
         echo $OCCUPY_SECRET | base64 --decode > $SECRET_PATH
 
-    - name: Save to GitHub Actions artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: application-secret
-        path: ./application-secret.yml
-      env: 
-        ARTIFACTS_UPLOAD_VISIBILITY: 'private'
+        # GitHub API를 이용하여 아티팩트 업로드
+        curl -H "Authorization: token $GITHUB_TOKEN" \
+             -H "Accept: application/vnd.github.v3+json" \
+             -H "Content-Type: application/zip" \
+             --data-binary @$SECRET_PATH \
+             "https://api.github.com/repos/ovo1234/testAction/actions/artifacts"
+
+    - name: Clean up
+      run: rm ./application-secret.yml
