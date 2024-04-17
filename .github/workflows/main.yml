@@ -15,7 +15,7 @@ jobs:
       with:
         fetch-depth: 0
 
-    - name: Download application-secret.yml
+    - name: Download yml
       env:
         SECRET_PATH: testActions/src/main/resources/application-secret.yml  # 로컬에 저장할 경로
         OCCUPY_SECRET: ${{ secrets.TEST_YML }}  # GitHub Secrets에 저장된 값
