@@ -18,7 +18,5 @@ jobs:
     - name: create secrets file
       env:
         OCCUPY_SECRET: ${{ secrets.TEST_YML }}
-      run: |
-        OCCUPY_SECRET_DIR= testActions/src/main/resources
-
-        echo $OCCUPY_SECRET | base64 --decode >> $OCCUPY_SECRET_DIR/application-secret.yml
+      run: 
+        echo $OCCUPY_SECRET | base64 --decode >> testActions/src/main/resources/application-secret.yml
