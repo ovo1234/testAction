@@ -20,6 +20,5 @@ jobs:
         OCCUPY_SECRET: ${{ secrets.TEST_YML }}
       run: |
         OCCUPY_SECRET_DIR= testActions/src/main/resources
-        OCCUPY_SECRET_DIR_FILE_NAME: application-secret.yml
 
-        echo $OCCUPY_SECRET | base64 --decode >> $OCCUPY_SECRET_DIR/$OCCUPY_SECRET_DIR_FILE_NAME
+        echo $OCCUPY_SECRET | base64 --decode >> $OCCUPY_SECRET_DIR/application-secret.yml
