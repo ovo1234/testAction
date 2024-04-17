@@ -21,7 +21,8 @@ jobs:
       run: echo $OCCUPY_SECRET | base64 --decode
       id: get_secret
 
-    - name: Save to local file
-      env:
-        SECRET_PATH: testActions/src/main/resources/application-secret.yml  # 로컬에 저장할 경로
-      run: echo "${{ steps.get_secret.outputs.stdout }}" > $SECRET_PATH
+    - name: Save to GitHub Actions artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: application-secret
+        path: application-secret.yml
