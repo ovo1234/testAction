@@ -1,12 +1,10 @@
-name: Pull and update application.yml
+name: Download application-secret.yml
 
 on:
-  push:
-    branches:
-      - develop  # 원하는 브랜치로 변경 가능
+  workflow_dispatch:  # 수동 트리거
 
 jobs:
-  pull-and-update-application-yml:
+  download-secret:
     runs-on: ubuntu-latest
 
     steps:
@@ -17,7 +15,11 @@ jobs:
 
     - name: Download application-secret.yml
       env:
-        SECRET_PATH: testActions/src/main/resources/application-secret.yml  # 로컬에 저장할 경로
         OCCUPY_SECRET: ${{ secrets.TEST_YML }}  # GitHub Secrets에 저장된 값
-      run: |
-        echo $OCCUPY_SECRET | base64 --decode > $SECRET_PATH
+      run: echo $OCCUPY_SECRET | base64 --decode
+      id: get_secret
+
+    - name: Save to local file
+      env:
+        SECRET_PATH: testActions/src/main/resources/application-secret.yml  # 로컬에 저장할 경로
+      run: echo "${{ steps.get_secret.outputs.stdout }}" > $SECRET_PATH
