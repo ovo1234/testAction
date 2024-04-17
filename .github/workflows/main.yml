@@ -17,20 +17,12 @@ jobs:
 
     - name: Print GitHub workspace
       run: echo "GitHub workspace is $GITHUB_WORKSPACE"
-           echo "{path}" >> $GITHUB_PATH
+      
+    - name : Print path
+      run : echo "{path}" >> $GITHUB_PATH ||
+            echo "Github path is $GITHUB_PATH"
 
     - name: Find application.yml
       run: |
         APPLICATION_YML_PATH=$(find $GITHUB_WORKSPACE -name "application.yml" -type f)
         echo "Found application.yml at $APPLICATION_YML_PATH"
-
-    - name: Copy Secret
-      env:
-        OCCUPY_SECRET: ${{ secrets.TEST_YML }}
-      run: |
-        OCCUPY_SECRET_DIR= testActions/src/main/resources
-        OCCUPY_SECRET_TEST_DIR= testActions/src/test/resources
-        OCCUPY_SECRET_DIR_FILE_NAME: application-secret.yml
-
-        echo $OCCUPY_SECRET | base64 --decode > $OCCUPY_SECRET_DIR/$OCCUPY_SECRET_DIR_FILE_NAME
-        echo $OCCUPY_SECRET | base64 --decode > $OCCUPY_SECRET_TEST_DIR/$OCCUPY_SECRET_DIR_FILE_NAME
